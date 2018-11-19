@@ -3,7 +3,7 @@
 //  Peerz
 //
 //  Created by David Cohen on 19/11/2018.
-//  Copyright © 2018 Peerz. All rights reserved.
+//  Copyright © 2018 Peerz ;). All rights reserved.
 //
 
 import UIKit
