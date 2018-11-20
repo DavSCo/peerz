@@ -1,14 +1,14 @@
 //
-//  FirstViewController.swift
+//  SecondViewController.swift
 //  Peerz
 //
 //  Created by David Cohen on 19/11/2018.
 //  Copyright © 2018 Peerz. All rights reserved.
-//-
+//
 
 import UIKit
 
-class FirstViewController: UIViewController {
+class SettingsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
