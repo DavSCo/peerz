@@ -17,10 +17,132 @@
                     <view key="view" contentMode="scaleToFill" id="tsR-hK-woN">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="ukO-eN-Gwt">
+                                <rect key="frame" x="17" y="663" width="342" height="50"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="4mk-bm-5vQ">
+                                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="50"/>
+                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Pn-1t-hOa">
+                                        <rect key="frame" x="2" y="0.0" width="16" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="16" id="30x-eS-1hR"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <state key="normal" title="+"/>
+                                        <connections>
+                                            <action selector="ChoiceSend:" destination="9pv-A4-QxB" eventType="touchUpInside" id="AXj-Nh-SyG"/>
+                                        </connections>
+                                    </button>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MVl-Pr-WIV">
+                                        <rect key="frame" x="20" y="0.0" width="265" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="265" id="cIO-yo-COU"/>
+                                        </constraints>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="9pv-A4-QxB" id="Xfn-0u-ybT"/>
+                                        </connections>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PZB-5d-2cT">
+                                        <rect key="frame" x="287" y="0.0" width="55" height="50"/>
+                                        <state key="normal" title="Envoyer"/>
+                                        <connections>
+                                            <action selector="ButtonSendMessage:" destination="9pv-A4-QxB" eventType="touchUpInside" id="hVM-RB-nBT"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="MVl-Pr-WIV" firstAttribute="top" secondItem="ukO-eN-Gwt" secondAttribute="top" id="SqH-YJ-vKR"/>
+                                    <constraint firstItem="MVl-Pr-WIV" firstAttribute="leading" secondItem="ukO-eN-Gwt" secondAttribute="leading" constant="20" symbolic="YES" id="VCs-mV-BPF"/>
+                                    <constraint firstAttribute="bottom" secondItem="MVl-Pr-WIV" secondAttribute="bottom" id="Wg3-JW-YXR"/>
+                                    <constraint firstItem="1Pn-1t-hOa" firstAttribute="leading" secondItem="4mk-bm-5vQ" secondAttribute="trailing" id="XT9-cM-AQA"/>
+                                    <constraint firstItem="MVl-Pr-WIV" firstAttribute="leading" secondItem="1Pn-1t-hOa" secondAttribute="trailing" constant="2" id="pzn-kI-23w"/>
+                                    <constraint firstItem="PZB-5d-2cT" firstAttribute="leading" secondItem="MVl-Pr-WIV" secondAttribute="trailing" constant="20" id="xRB-ex-YFO"/>
+                                </constraints>
+                            </stackView>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="7IE-iY-xh5">
+                                <rect key="frame" x="16" y="163" width="343" height="451"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="GCe-9R-YTJ">
+                                    <size key="itemSize" width="343" height="51"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <imageView key="backgroundView" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="ibl-Gr-nb6">
+                                    <rect key="frame" x="0.0" y="0.0" width="343" height="451"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </imageView>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="theirCell" id="GdS-oC-79T" customClass="MessageBubbleCollectionViewCell" customModule="Peerz" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="51"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="51"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VWf-x0-gVh">
+                                                    <rect key="frame" x="0.0" y="0.0" width="343" height="51"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </view>
+                                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <outlet property="messageLabel" destination="VWf-x0-gVh" id="ZMH-pl-aCa"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="myCell" id="DWO-U8-Q5Y" customClass="MessageBubbleCollectionViewCell" customModule="Peerz" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="61" width="343" height="51"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="51"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s2B-nl-wxC">
+                                                    <rect key="frame" x="0.0" y="0.0" width="343" height="51"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </view>
+                                        <color key="backgroundColor" red="0.066816301829999994" green="0.98039215690000003" blue="0.11441780059999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <outlet property="messageLabel" destination="s2B-nl-wxC" id="d8F-v3-7t0"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="ukO-eN-Gwt" firstAttribute="top" secondItem="7IE-iY-xh5" secondAttribute="bottom" constant="49" id="EnB-oR-1a5"/>
+                            <constraint firstItem="7IE-iY-xh5" firstAttribute="top" secondItem="PQr-Ze-W5v" secondAttribute="top" constant="23" id="Xco-lQ-PCX"/>
+                            <constraint firstItem="PQr-Ze-W5v" firstAttribute="trailing" secondItem="ukO-eN-Gwt" secondAttribute="trailing" constant="16" id="gJg-kA-HEQ"/>
+                            <constraint firstItem="PQr-Ze-W5v" firstAttribute="bottom" secondItem="ukO-eN-Gwt" secondAttribute="bottom" constant="16" id="uvI-3O-LDn"/>
+                            <constraint firstItem="PQr-Ze-W5v" firstAttribute="trailing" secondItem="7IE-iY-xh5" secondAttribute="trailing" constant="16" id="zLC-Fe-w9c"/>
+                            <constraint firstItem="7IE-iY-xh5" firstAttribute="leading" secondItem="PQr-Ze-W5v" secondAttribute="leading" constant="16" id="zek-7f-Zoh"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="PQr-Ze-W5v"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="r7k-iM-kPw" appends="YES" id="RsT-SZ-aeP"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" title="Chats" id="npq-Uq-4WL">
+                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="action" id="E7s-Rw-vwA">
+                            <connections>
+                                <action selector="ChoiceButton:" destination="9pv-A4-QxB" id="ib6-7y-cez"/>
+                            </connections>
+                        </barButtonItem>
                         <rightBarButtonItems>
                             <barButtonItem title="Item" image="videocall" id="ICV-tl-3Hw">
                                 <color key="tintColor" red="1" green="0.2470588235" blue="0.20392156859999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -30,10 +152,21 @@
                             </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
+                    <connections>
+                        <outlet property="collectionView" destination="7IE-iY-xh5" id="x2s-mz-yYn"/>
+                        <outlet property="imgView" destination="ibl-Gr-nb6" id="SDO-Tg-q0M"/>
+                        <outlet property="messageTextField" destination="MVl-Pr-WIV" id="P5Z-F8-wOJ"/>
+                        <outlet property="tapGestureView" destination="r7k-iM-kPw" id="q8f-jr-eNP"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="r7k-iM-kPw">
+                    <connections>
+                        <action selector="hideKeyboardAction:" destination="9pv-A4-QxB" id="6IP-CE-aOe"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2628" y="-370"/>
+            <point key="canvasLocation" x="2628" y="-370.19704433497537"/>
         </scene>
         <!--Settings-->
         <scene sceneID="wg7-f3-ORb">
