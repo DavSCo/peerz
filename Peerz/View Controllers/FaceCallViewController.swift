@@ -30,7 +30,6 @@ class FaceCallViewController: UIViewController, MCSessionDelegate, MCBrowserView
     var settings = [String : Int]()
     let audioSession = AVAudioSession.sharedInstance()
     var audioOutput = AVCaptureAudioDataOutput()
-    //
     
     
     //Session
