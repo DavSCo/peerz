@@ -237,6 +237,9 @@
                         <rightBarButtonItems>
                             <barButtonItem title="Item" image="videocall" id="Wdj-NH-yLo">
                                 <color key="tintColor" red="1" green="0.2470588235" blue="0.20392156859999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <segue destination="B2N-5f-1MA" kind="show" id="oaq-On-CTe"/>
+                                </connections>
                             </barButtonItem>
                             <barButtonItem title="Item" image="phone" id="6bD-bD-VeW">
                                 <color key="tintColor" red="1" green="0.2470588235" blue="0.20392156859999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -247,6 +250,61 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XSh-iI-qgo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2628" y="306.29685157421289"/>
+        </scene>
+        <!--Face Call View Controller-->
+        <scene sceneID="HIL-sg-zYr">
+            <objects>
+                <viewController id="B2N-5f-1MA" customClass="FaceCallViewController" customModule="Peerz" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="02O-km-MkZ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7gQ-2c-vzY">
+                                <rect key="frame" x="0.0" y="140" width="375" height="589"/>
+                                <color key="backgroundColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dDO-Vd-h3n">
+                                <rect key="frame" x="276" y="602" width="83" height="107"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="grk-QY-kpL">
+                                <rect key="frame" x="160" y="627" width="70" height="70"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="70" id="7hz-qn-jDM"/>
+                                    <constraint firstAttribute="height" constant="70" id="ZAb-O1-sBx"/>
+                                </constraints>
+                                <state key="normal" image="FaceCallEnd"/>
+                                <connections>
+                                    <action selector="endCallButtonAction:" destination="B2N-5f-1MA" eventType="touchUpInside" id="rnt-os-vJC"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="7W6-Ba-uCw" firstAttribute="trailing" secondItem="7gQ-2c-vzY" secondAttribute="trailing" id="FIw-Su-Yyp"/>
+                            <constraint firstItem="7gQ-2c-vzY" firstAttribute="leading" secondItem="7W6-Ba-uCw" secondAttribute="leading" id="JqQ-PS-MCV"/>
+                            <constraint firstItem="7W6-Ba-uCw" firstAttribute="bottom" secondItem="dDO-Vd-h3n" secondAttribute="bottom" constant="20" id="RGQ-WA-BRj"/>
+                            <constraint firstItem="7gQ-2c-vzY" firstAttribute="top" secondItem="7W6-Ba-uCw" secondAttribute="top" id="W95-22-Clj"/>
+                            <constraint firstItem="7W6-Ba-uCw" firstAttribute="trailing" secondItem="dDO-Vd-h3n" secondAttribute="trailing" constant="16" id="bfn-RQ-8wX"/>
+                            <constraint firstItem="7W6-Ba-uCw" firstAttribute="bottom" secondItem="grk-QY-kpL" secondAttribute="bottom" constant="32" id="cxe-N1-C52"/>
+                            <constraint firstItem="7W6-Ba-uCw" firstAttribute="bottom" secondItem="7gQ-2c-vzY" secondAttribute="bottom" id="hkj-UQ-Nz0"/>
+                            <constraint firstItem="dDO-Vd-h3n" firstAttribute="leading" secondItem="grk-QY-kpL" secondAttribute="trailing" constant="46" id="iOF-7L-Df8"/>
+                            <constraint firstItem="dDO-Vd-h3n" firstAttribute="leading" secondItem="7W6-Ba-uCw" secondAttribute="leading" constant="276" id="l7D-KJ-8XN"/>
+                            <constraint firstItem="dDO-Vd-h3n" firstAttribute="top" secondItem="7W6-Ba-uCw" secondAttribute="top" constant="462" id="qZd-ZL-Ebv"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="7W6-Ba-uCw"/>
+                    </view>
+                    <toolbarItems>
+                        <barButtonItem title="Item" id="i6M-cn-YLa"/>
+                    </toolbarItems>
+                    <connections>
+                        <outlet property="imageView" destination="7gQ-2c-vzY" id="rHR-zW-bM1"/>
+                        <outlet property="videoView" destination="dDO-Vd-h3n" id="og1-bm-EHs"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aTu-WG-EJC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3708.6956521739135" y="305.35714285714283"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
@@ -328,6 +386,7 @@
     </scenes>
     <resources>
         <image name="Chats" width="56.25" height="56.25"/>
+        <image name="FaceCallEnd" width="1024" height="1024"/>
         <image name="Private" width="56.25" height="56.25"/>
         <image name="Settings" width="56.25" height="56.25"/>
         <image name="phone" width="56.25" height="56.25"/>

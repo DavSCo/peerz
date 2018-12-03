@@ -16,6 +16,7 @@
 		795540A621A2FC4E00E5EB01 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 795540A521A2FC4E00E5EB01 /* Assets.xcassets */; };
 		795540A921A2FC4E00E5EB01 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 795540A721A2FC4E00E5EB01 /* LaunchScreen.storyboard */; };
 		795540B321A4014C00E5EB01 /* PrivateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795540B221A4014C00E5EB01 /* PrivateViewController.swift */; };
+		79847D0A21AC244A00269490 /* FaceCallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79847D0921AC244A00269490 /* FaceCallViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		795540A821A2FC4E00E5EB01 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		795540AA21A2FC4E00E5EB01 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		795540B221A4014C00E5EB01 /* PrivateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateViewController.swift; sourceTree = "<group>"; };
+		79847D0921AC244A00269490 /* FaceCallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceCallViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,8 +81,12 @@
 				7955409E21A2FC4C00E5EB01 /* ChatsViewController.swift */,
 				795540A021A2FC4C00E5EB01 /* SettingsViewController.swift */,
 				795540B221A4014C00E5EB01 /* PrivateViewController.swift */,
+
 				4E5393BD21ABFCCC001AA7E5 /* MessageBubbleCollectionViewCell.swift */,
 				4E2DC34321B542B2006B89A0 /* ImageCellController.swift */,
+
+				79847D0921AC244A00269490 /* FaceCallViewController.swift */,
+
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -166,6 +172,7 @@
 				795540B321A4014C00E5EB01 /* PrivateViewController.swift in Sources */,
 				795540A121A2FC4C00E5EB01 /* SettingsViewController.swift in Sources */,
 				7955409D21A2FC4C00E5EB01 /* AppDelegate.swift in Sources */,
+				79847D0A21AC244A00269490 /* FaceCallViewController.swift in Sources */,
 				7955409F21A2FC4C00E5EB01 /* ChatsViewController.swift in Sources */,
 				4E5393BE21ABFCCC001AA7E5 /* MessageBubbleCollectionViewCell.swift in Sources */,
 				4E2DC34421B542B2006B89A0 /* ImageCellController.swift in Sources */,
@@ -315,7 +322,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = KL4T9L72P2;
+
+				DEVELOPMENT_TEAM = CZB4ZK4EUT;
+
 				INFOPLIST_FILE = Peerz/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -334,7 +343,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = KL4T9L72P2;
+
+				DEVELOPMENT_TEAM = CZB4ZK4EUT;
+
 				INFOPLIST_FILE = Peerz/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = (
