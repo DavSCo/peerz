@@ -10,6 +10,7 @@ import UIKit
 
 class MessageBubbleCollectionViewCell: UICollectionViewCell {
     
+    @IBOutlet weak var bubbleImageView: UIImageView!
     @IBOutlet weak var messageLabel: UILabel!
     
 }

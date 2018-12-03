@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E2DC34421B542B2006B89A0 /* ImageCellController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E2DC34321B542B2006B89A0 /* ImageCellController.swift */; };
 		4E5393BE21ABFCCC001AA7E5 /* MessageBubbleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5393BD21ABFCCC001AA7E5 /* MessageBubbleCollectionViewCell.swift */; };
 		7955409D21A2FC4C00E5EB01 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7955409C21A2FC4C00E5EB01 /* AppDelegate.swift */; };
 		7955409F21A2FC4C00E5EB01 /* ChatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7955409E21A2FC4C00E5EB01 /* ChatsViewController.swift */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4E2DC34321B542B2006B89A0 /* ImageCellController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCellController.swift; sourceTree = "<group>"; };
 		4E5393BD21ABFCCC001AA7E5 /* MessageBubbleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBubbleCollectionViewCell.swift; sourceTree = "<group>"; };
 		7955409921A2FC4C00E5EB01 /* Peerz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Peerz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7955409C21A2FC4C00E5EB01 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -78,6 +80,7 @@
 				795540A021A2FC4C00E5EB01 /* SettingsViewController.swift */,
 				795540B221A4014C00E5EB01 /* PrivateViewController.swift */,
 				4E5393BD21ABFCCC001AA7E5 /* MessageBubbleCollectionViewCell.swift */,
+				4E2DC34321B542B2006B89A0 /* ImageCellController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -165,6 +168,7 @@
 				7955409D21A2FC4C00E5EB01 /* AppDelegate.swift in Sources */,
 				7955409F21A2FC4C00E5EB01 /* ChatsViewController.swift in Sources */,
 				4E5393BE21ABFCCC001AA7E5 /* MessageBubbleCollectionViewCell.swift in Sources */,
+				4E2DC34421B542B2006B89A0 /* ImageCellController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
