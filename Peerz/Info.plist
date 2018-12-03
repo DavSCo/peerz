@@ -25,7 +25,11 @@
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Autorise acces ? </string>
+	<string>Autorise access ? </string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Peerz need access to your Picture Library</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Peerz need access to your Microphone</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
