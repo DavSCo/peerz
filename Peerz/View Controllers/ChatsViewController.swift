@@ -12,41 +12,28 @@ import Photos
 import MultipeerConnectivity
 
 class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate,UITextFieldDelegate ,UIImagePickerControllerDelegate , UINavigationControllerDelegate{
-    //// VARIABLE /////
-    
-    
-    //on stock les images
-    
-    var images = [UIImage]()
-    
-    
+/////////////////////////////////////////////////////////////////////////VARIABLE ///////////////////////////////////////////////////////////////
     
     @IBOutlet weak var collectionView: UICollectionView!
+    //Variable peerID
     var peerID: MCPeerID!
+    //variable mcSession
     var mcSession: MCSession!
+    //variable Avertisseur
     var mcAdvertiserAssistant: MCAdvertiserAssistant!
-    
-    @IBOutlet weak var imgView: UIImageView!
-    
     //choisir photo
     let imagePicker = UIImagePickerController()
     
-    
-    
     //variable du tap recognizer
     @IBOutlet var tapGestureView: UITapGestureRecognizer!
-    
+    //text field
     @IBOutlet weak var messageTextField: UITextField!
-    
+    //tabkeau de message
     var tabMember:  [Message] = []
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ 
     
-    @IBAction func hideKeyboardAction(_ sender: Any) {
-        
-        messageTextField.endEditing(true)
-        
-    }
-    
-    ///// STRUCTURES//////
+///////////////////////////////////////////////////////STRUCTURES//////////////////////////////////////////////////////////////////////////////////
     struct Member {
         let name: String
         let color: UIColor
@@ -60,7 +47,7 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         let type : String
         
     }
-    ////////////////////////
+////////////////////////////////////////////////////////////FUNCTION///////////////////////////////////////////////////////////////////////////////
     
     
     
@@ -82,8 +69,14 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         mcSession = MCSession(peer: peerID, securityIdentity: nil, encryptionPreference: .required)
         mcSession.delegate = self
     }
+    //cacher le clavier
+    @IBAction func hideKeyboardAction(_ sender: Any) {
+        
+        messageTextField.endEditing(true)
+        
+    }
     
-    
+    //bouger le clavier
     func textFieldDidBeginEditing(_ textField: UITextField) {
         moveTextField(textField, moveDistance: -200, up: true)
     }
@@ -265,7 +258,6 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         }
         
     }
-///////////////////////////////////////////////////////////////////////////
     
     
     
@@ -353,7 +345,6 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         
         dismiss(animated: true)
         
-        //images.insert(image, at: 0)
         sendPicture(img: image)
         collectionView?.reloadData()
     }
