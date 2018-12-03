@@ -149,15 +149,16 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         
         
         if tabMember[indexPath.item].member.name == mcSession.myPeerID.displayName   {
-            if tabMember[indexPath.item].type == "text"{
+            if tabMember[indexPath.item].type == "text" || tabMember[indexPath.item].type == "audio"  {
                 identifier = "myCell"
 
             }else if tabMember[indexPath.item].type == "picture"{
                 identifier = "myPicture"
             }
+            
         } else  {
             
-            if tabMember[indexPath.item].type == "text"{
+           if tabMember[indexPath.item].type == "text" || tabMember[indexPath.item].type == "audio"{
                 identifier = "theirCell"
                 
             }else if tabMember[indexPath.item].type == "picture"{
@@ -170,7 +171,6 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         
         if tabMember[indexPath.item].type == "text"{
             cell.messageLabel.text = tabMember[indexPath.item].text
-            
         }else if tabMember[indexPath.item].type == "picture"{
             cell.bubbleImageView.image = tabMember[indexPath.item].image
         }else if tabMember[indexPath.item].type == "audio"{
@@ -478,6 +478,7 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
                     try mcSession.send(Data(contentsOf: URL(fileURLWithPath: fileURL)), toPeers: mcSession.connectedPeers, with: .reliable)
                     
                     let newMember = Member(name: peerID.displayName, color: .blue)
+                    
                     let newMessage = Message(member: newMember, text: fileURL.components(separatedBy: "/").last!, image: nil, type: "audio")
                     
                     tabMember.append(newMessage)
