@@ -8,31 +8,32 @@
 
 
 import UIKit
+import Photos
 import MultipeerConnectivity
 import AVFoundation
 
-class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate,UITextFieldDelegate, AVAudioRecorderDelegate {
-    //// VARIABLE /////
+class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate,UITextFieldDelegate,UIImagePickerControllerDelegate , UINavigationControllerDelegate, AVAudioRecorderDelegate {
+/////////////////////////////////////////////////////////////////////////VARIABLE ///////////////////////////////////////////////////////////////
     @IBOutlet weak var sendVocalButton: UIButton!
     
     @IBOutlet weak var collectionView: UICollectionView!
+    //Variable peerID
     var peerID: MCPeerID!
+    //variable mcSession
     var mcSession: MCSession!
+    //variable Avertisseur
     var mcAdvertiserAssistant: MCAdvertiserAssistant!
     //choisir photo
-    var imagePicker = UIImagePickerController()
+    let imagePicker = UIImagePickerController()
     
-    @IBOutlet weak var imgView: UIImageView!
     
     //variable du tap recognizer
     @IBOutlet var tapGestureView: UITapGestureRecognizer!
-    
+    //text field
     @IBOutlet weak var messageTextField: UITextField!
-    
-    // var tabMessage: [String] = []
+    //tabkeau de message
     var tabMember:  [Message] = []
-    
-    // vocal notes
+      // vocal notes
     var recordingSession: AVAudioSession!
     var audioRecorder: AVAudioRecorder!
     var audioPlayer: AVAudioPlayer!
@@ -45,30 +46,42 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
     
     
     var audioSend = false
+  
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ 
     
-    @IBAction func hideKeyboardAction(_ sender: Any) {
-        messageTextField.endEditing(true)
-    }
-    
-    ///// STRUCTURES//////
+///////////////////////////////////////////////////////STRUCTURES//////////////////////////////////////////////////////////////////////////////////
+
     struct Member {
         let name: String
         let color: UIColor
     }
+  
     
     struct Message {
         let member: Member
-        let text: String
-        let type: String
+        let text: String?
+        let image: UIImage?
+        let type : String
         
     }
-    ////////////////////////
+////////////////////////////////////////////////////////////FUNCTION///////////////////////////////////////////////////////////////////////////////
+   
+    
+
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.collectionView.dataSource = self
-        self.collectionView.delegate = self
+
+        imagePicker.popoverPresentationController?.delegate = self as? UIPopoverPresentationControllerDelegate
+        
+        
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        
+
         
         peerID = MCPeerID(displayName: UIDevice.current.name)
         mcSession = MCSession(peer: peerID, securityIdentity: nil, encryptionPreference: .required)
@@ -91,8 +104,14 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
             print("Failed to record!")
         }
     }
+    //cacher le clavier
+    @IBAction func hideKeyboardAction(_ sender: Any) {
+        
+        messageTextField.endEditing(true)
+        
+    }
     
-    
+    //bouger le clavier
     func textFieldDidBeginEditing(_ textField: UITextField) {
         moveTextField(textField, moveDistance: -200, up: true)
     }
@@ -126,18 +145,44 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
     //cellule du collection view
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let identifier: String
+        var identifier: String = ""
+        
         
         if tabMember[indexPath.item].member.name == mcSession.myPeerID.displayName   {
-            identifier = "myCell"
-        } else {
-            identifier = "theirCell"
+            if tabMember[indexPath.item].type == "text"{
+                identifier = "myCell"
+
+            }else if tabMember[indexPath.item].type == "picture"{
+                identifier = "myPicture"
+            }
+        } else  {
+            
+            if tabMember[indexPath.item].type == "text"{
+                identifier = "theirCell"
+                
+            }else if tabMember[indexPath.item].type == "picture"{
+                identifier = "theirPicture"
+            }
+
         }
-        
+     
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! MessageBubbleCollectionViewCell
         
-        cell.messageLabel.text = tabMember[indexPath.item].type == "text" ? tabMember[indexPath.item].text : "▶️"
+        if tabMember[indexPath.item].type == "text"{
+            cell.messageLabel.text = tabMember[indexPath.item].text
+
+        }else if tabMember[indexPath.item].type == "picture"{
+            cell.bubbleImageView.image = tabMember[indexPath.item].image
+        }
+        
+        
+        
+        
+        
+        
+
         cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapCell(_:))))
+
         
         return cell
     }
@@ -195,6 +240,11 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         }
     }
     
+
+    
+    
+    ///////////////////////////////////FONCTION D'ENVOI////////////////////////////////////////
+
     func sendMessage(text: String)
     {
         if mcSession.connectedPeers.count > 0 {
@@ -202,8 +252,7 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
                 do {
                     
                     let newMember = Member(name: peerID.displayName, color: .blue)
-                    
-                    let newMessage=Message(member: newMember, text: text, type: "text")
+                    let newMessage=Message(member: newMember, text: text, image: nil, type: "text")
 
                     if messageTextField.text != ""
                     {
@@ -223,21 +272,42 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         }
     }
     
+    func sendPicture(img:UIImage) {
+        if mcSession.connectedPeers.count > 0 {
+            if let imageData = img.pngData() {
+                // 3
+                do {
+                    let newMember = Member(name: peerID.displayName, color: .blue)
+                    let newMessage=Message(member: newMember, text: nil, image:img , type: "picture")
+                    tabMember.append(newMessage)
+                    try mcSession.send(imageData, toPeers: mcSession.connectedPeers, with: .reliable)
+                } catch {
+                    let ac = UIAlertController(title: "Send error", message: error.localizedDescription, preferredStyle: .alert)
+                    ac.addAction(UIAlertAction(title: "OK", style: .default))
+                    present(ac, animated: true)
+                }
+            }
+        }
+        
+    }
+ 
     //on recoit le message
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
         if let message = String(data: data, encoding: .utf8) {
             let newMember = Member(name: peerID.displayName, color: .blue)
-            let temMessage = Message(member: newMember, text: message, type: "text")
+            let tempMessage = Message(member: newMember, text: message, image: nil, type: "text")
             DispatchQueue.main.async {
-                self.tabMember.append(temMessage)
+                self.tabMember.append(tempMessage)
                 self.collectionView.reloadData()
             }
         }
         
         if let image = UIImage(data: data) {
+            let newMember = Member(name: peerID.displayName, color: .blue)
+            let tempMessage = Message(member: newMember, text: nil, image: image, type: "picture")
             DispatchQueue.main.async { [unowned self] in
-                self.sendPicture(img: image)
-                print(image)
+                self.tabMember.append(tempMessage)
+                self.collectionView?.reloadData()
             }
         }
         
@@ -287,22 +357,14 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
     }
     
     
-    func sendPicture(img:UIImage) {
-        if mcSession.connectedPeers.count > 0 {
-            if let imageData = img.pngData() {
-                do {
-                    try mcSession.send(imageData, toPeers: mcSession.connectedPeers, with: .reliable)
-                } catch let error as NSError {
-                    let ac = UIAlertController(title: "Send error", message: error.localizedDescription, preferredStyle: .alert)
-                    ac.addAction(UIAlertAction(title: "OK", style: .default))
-                    present(ac, animated: true)
-                }
-            }
-        }
-        
+    func importPicture(action: UIAlertAction!) {
+        let picker = UIImagePickerController()
+        picker.allowsEditing = true
+        picker.delegate = self
+        present(picker, animated: true)
     }
-    
-    ////////////////////////////////////////////////////////////////////////////////////
+
+  
     func startPhoto(action: UIAlertAction!) {
         
         if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum){
@@ -315,23 +377,54 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
             self.present(imagePicker, animated: true, completion: nil)
         }
     }
-    
     @IBAction func ChoiceSend(_ sender: Any) {
         
         let aChoice = UIAlertController(title: "Choice Send", message: nil, preferredStyle: .actionSheet)
-        aChoice.addAction(UIAlertAction(title: "Envoyer Une photo", style: .default, handler: startPhoto))
+        aChoice.addAction(UIAlertAction(title: "Envoyer Une photo", style: .default, handler: importPicture))
         aChoice.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         
         present(aChoice, animated: true)
+
     }
-    func imagePickerController(picker: UIImagePickerController!, didFinishPickingImage image: UIImage!, editingInfo: NSDictionary!){
-        self.dismiss(animated: true, completion: { () -> Void in
-            
-        })
+ 
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let image = info[.editedImage] as? UIImage else { return }
         
-        imgView.image = image
+        dismiss(animated: true)
+        
+        sendPicture(img: image)
+        collectionView?.reloadData()
     }
     
+
+    func checkPermission() {
+        let photoAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
+        switch photoAuthorizationStatus {
+        case .authorized: 
+            
+            present(imagePicker, animated: true, completion: nil)
+        case .notDetermined:
+            PHPhotoLibrary.requestAuthorization({
+                (newStatus) in
+                print("status is \(newStatus)")
+                if newStatus ==  PHAuthorizationStatus.authorized {
+                    /* do stuff here */
+                    self.present(self.imagePicker, animated: true, completion: nil)
+                    print("success")
+                }
+            })
+            print("It is not determined until now")
+        case .restricted:
+            // same same
+            print("User do not have access to photo album.")
+        case .denied:
+            // same same
+            print("User has denied the permission.")
+        }
+    }
+  
+        
+
     @IBAction func sendVocal(_ sender: UIButton) {
         if audioRecorder == nil {
             self.sendVocalButton.setTitle("S", for: .normal)
@@ -341,6 +434,7 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
             self.finishRecording(success: true)
         }
     }
+
     
     func startRecording() {
         fileName =  "\(getDate())-recording"
@@ -403,6 +497,7 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         }
     }
     
+
     func playAudio(URLTo: String) {
         do {
             print(URLTo)
@@ -439,6 +534,7 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
     func getTempDirectory() -> URL {
         return URL(fileURLWithPath: NSTemporaryDirectory())
     }
+
 }
 
 
