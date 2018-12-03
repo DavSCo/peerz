@@ -24,6 +24,11 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Autorise access ? </string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Peerz need access to your Picture Library</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Peerz need your camera for make a FaceCall</string>
 	<key>NSMicrophoneUsageDescription</key>
