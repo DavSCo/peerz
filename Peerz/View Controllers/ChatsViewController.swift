@@ -142,7 +142,7 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
     }
     
     
-    //cellule du collection view
+    //ule du collection view
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         var identifier: String = ""
@@ -170,17 +170,13 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         
         if tabMember[indexPath.item].type == "text"{
             cell.messageLabel.text = tabMember[indexPath.item].text
-
+            
         }else if tabMember[indexPath.item].type == "picture"{
             cell.bubbleImageView.image = tabMember[indexPath.item].image
+        }else if tabMember[indexPath.item].type == "audio"{
+            cell.messageLabel.text = "▶️"
         }
         
-        
-        
-        
-        
-        
-
         cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapCell(_:))))
 
         
@@ -193,7 +189,7 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         let indexPath = self.collectionView.indexPathForItem(at: location)
         
         if let index = indexPath {
-            let tempURL =  getTempDirectory().absoluteString + tabMember[index.row].text
+            let tempURL =  getTempDirectory().absoluteString + tabMember[index.row].text!
             print("Tapped with text")
             print(fileURL)
             playAudio(URLTo: tempURL.replacingOccurrences(of: "file://", with: ""))
@@ -318,7 +314,7 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
                     try  data.write(to: self.getTempDirectory().appendingPathComponent(tempName))
                     
                     let newMember = Member(name: peerID.displayName, color: .blue)
-                    let temMessage = Message(member: newMember, text: tempName, type: "audio")
+                    let temMessage = Message(member: newMember, text: tempName, image: nil, type: "audio")
                     
                     
                     self.tabMember.append(temMessage)
@@ -482,7 +478,7 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
                     try mcSession.send(Data(contentsOf: URL(fileURLWithPath: fileURL)), toPeers: mcSession.connectedPeers, with: .reliable)
                     
                     let newMember = Member(name: peerID.displayName, color: .blue)
-                    let newMessage = Message(member: newMember, text: fileURL.components(separatedBy: "/").last!, type: "audio")
+                    let newMessage = Message(member: newMember, text: fileURL.components(separatedBy: "/").last!, image: nil, type: "audio")
                     
                     tabMember.append(newMessage)
                     collectionView.reloadData()
