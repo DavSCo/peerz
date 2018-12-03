@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="ukO-eN-Gwt">
-                                <rect key="frame" x="17" y="663" width="342" height="50"/>
+                                <rect key="frame" x="10" y="663" width="349" height="50"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="4mk-bm-5vQ">
                                         <rect key="frame" x="0.0" y="0.0" width="0.0" height="50"/>
@@ -48,10 +48,17 @@
                                         </connections>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PZB-5d-2cT">
-                                        <rect key="frame" x="287" y="0.0" width="55" height="50"/>
-                                        <state key="normal" title="Envoyer"/>
+                                        <rect key="frame" x="287" y="0.0" width="30" height="50"/>
+                                        <state key="normal" title="E"/>
                                         <connections>
                                             <action selector="ButtonSendMessage:" destination="9pv-A4-QxB" eventType="touchUpInside" id="hVM-RB-nBT"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JlP-xi-Alv">
+                                        <rect key="frame" x="319" y="0.0" width="30" height="50"/>
+                                        <state key="normal" title="R"/>
+                                        <connections>
+                                            <action selector="sendVocal:" destination="9pv-A4-QxB" eventType="touchUpInside" id="Kgg-3M-fxg"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -156,6 +163,7 @@
                         <outlet property="collectionView" destination="7IE-iY-xh5" id="x2s-mz-yYn"/>
                         <outlet property="imgView" destination="ibl-Gr-nb6" id="SDO-Tg-q0M"/>
                         <outlet property="messageTextField" destination="MVl-Pr-WIV" id="P5Z-F8-wOJ"/>
+                        <outlet property="sendVocalButton" destination="JlP-xi-Alv" id="3ts-gE-L8h"/>
                         <outlet property="tapGestureView" destination="r7k-iM-kPw" id="q8f-jr-eNP"/>
                     </connections>
                 </viewController>

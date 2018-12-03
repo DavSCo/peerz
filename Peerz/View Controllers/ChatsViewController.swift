@@ -9,12 +9,11 @@
 
 import UIKit
 import MultipeerConnectivity
+import AVFoundation
 
-class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate,UITextFieldDelegate {
+class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate,UITextFieldDelegate, AVAudioRecorderDelegate {
     //// VARIABLE /////
-    
-    
-    
+    @IBOutlet weak var sendVocalButton: UIButton!
     
     @IBOutlet weak var collectionView: UICollectionView!
     var peerID: MCPeerID!
@@ -22,7 +21,7 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
     var mcAdvertiserAssistant: MCAdvertiserAssistant!
     //choisir photo
     var imagePicker = UIImagePickerController()
-
+    
     @IBOutlet weak var imgView: UIImageView!
     
     //variable du tap recognizer
@@ -33,10 +32,22 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
     // var tabMessage: [String] = []
     var tabMember:  [Message] = []
     
+    // vocal notes
+    var recordingSession: AVAudioSession!
+    var audioRecorder: AVAudioRecorder!
+    var audioPlayer: AVAudioPlayer!
+    
+    
+    // file
+    var fileName = ""
+    var fileExtension = ""
+    var fileURL = ""
+    
+    
+    var audioSend = false
+    
     @IBAction func hideKeyboardAction(_ sender: Any) {
-        
         messageTextField.endEditing(true)
-        
     }
     
     ///// STRUCTURES//////
@@ -48,30 +59,37 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
     struct Message {
         let member: Member
         let text: String
+        let type: String
         
     }
     ////////////////////////
-    
-    
-    
-    
-    
-    
+
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         
-        
-        
-        
-        
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        
+        self.collectionView.dataSource = self
+        self.collectionView.delegate = self
         
         peerID = MCPeerID(displayName: UIDevice.current.name)
         mcSession = MCSession(peer: peerID, securityIdentity: nil, encryptionPreference: .required)
         mcSession.delegate = self
+        
+        
+        recordingSession = AVAudioSession.sharedInstance()
+        do {
+            try recordingSession.setCategory(.playAndRecord, mode: .default)
+            try recordingSession.setActive(true)
+            recordingSession.requestRecordPermission() { [unowned self] allowed in DispatchQueue.main.async {
+                if allowed {
+                    print("Recording allowed")
+                } else {
+                    print("Recording not allowed")
+                }
+                }
+            }
+        } catch {
+            print("Failed to record!")
+        }
     }
     
     
@@ -83,8 +101,6 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
     func textFieldDidEndEditing(_ textField: UITextField) {
         moveTextField(textField, moveDistance: -200, up: false)
     }
-    
-    
     
     // on bouge le text fild
     func moveTextField(_ textField: UITextField, moveDistance: Int, up: Bool) {
@@ -100,20 +116,10 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         UIView.commitAnimations()
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
     //function return nombre de item dans collenction view
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         return tabMember.count
-        
-        
     }
     
     
@@ -130,17 +136,25 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! MessageBubbleCollectionViewCell
         
-        
-        cell.messageLabel.text = tabMember[indexPath.item].text
-        
-        
-        
-        
+        cell.messageLabel.text = tabMember[indexPath.item].type == "text" ? tabMember[indexPath.item].text : "▶️"
+        cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapCell(_:))))
         
         return cell
-        
-        
     }
+    
+    @objc func tapCell(_ sender: UITapGestureRecognizer) {
+        
+        let location = sender.location(in: self.collectionView)
+        let indexPath = self.collectionView.indexPathForItem(at: location)
+        
+        if let index = indexPath {
+            let tempURL =  getTempDirectory().absoluteString + tabMember[index.row].text
+            print("Tapped with text")
+            print(fileURL)
+            playAudio(URLTo: tempURL.replacingOccurrences(of: "file://", with: ""))
+        }
+    }
+
     
     //function qui utilise la fonction d'envoi de message
     @IBAction func ButtonSendMessage(_ sender: Any) {
@@ -181,11 +195,6 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         }
     }
     
-    
-    
-    
-    
-    
     func sendMessage(text: String)
     {
         if mcSession.connectedPeers.count > 0 {
@@ -194,19 +203,16 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
                     
                     let newMember = Member(name: peerID.displayName, color: .blue)
                     
-                    let newMessage=Message(member: newMember, text: text)
-                    
-                    
-                    // tabMessage.append(text)
+                    let newMessage=Message(member: newMember, text: text, type: "text")
+
                     if messageTextField.text != ""
                     {
-                    tabMember.append(newMessage)
+                        tabMember.append(newMessage)
                     }
                     collectionView.reloadData()
                     
                     try mcSession.send(messText, toPeers: mcSession.connectedPeers, with: .reliable)
                     messageTextField.text=""
-                    
                     
                 } catch let error as NSError {
                     let ac = UIAlertController(title: "Send error", message: error.localizedDescription, preferredStyle: .alert)
@@ -217,21 +223,15 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         }
     }
     
-    
-    
-    
-    
     //on recoit le message
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
         if let message = String(data: data, encoding: .utf8) {
             let newMember = Member(name: peerID.displayName, color: .blue)
-            let temMessage = Message(member: newMember, text: message)
+            let temMessage = Message(member: newMember, text: message, type: "text")
             DispatchQueue.main.async {
                 self.tabMember.append(temMessage)
                 self.collectionView.reloadData()
             }
-            
-            
         }
         
         if let image = UIImage(data: data) {
@@ -241,7 +241,26 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
             }
         }
         
-        
+        if audioSend ==  true {
+            DispatchQueue.main.async {
+                do {
+                    let tempName = "\(self.getDate())-received.m4a"
+                    try  data.write(to: self.getTempDirectory().appendingPathComponent(tempName))
+                    
+                    let newMember = Member(name: peerID.displayName, color: .blue)
+                    let temMessage = Message(member: newMember, text: tempName, type: "audio")
+                    
+                    
+                    self.tabMember.append(temMessage)
+                    self.collectionView.reloadData()
+                    
+                    self.audioSend = false
+                    
+                } catch let error {
+                    print(error)
+                }
+            }
+       }
     }
     
     // pour creer une session
@@ -256,10 +275,7 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         present(mcBrowser, animated: true)
     }
     
-    
-    
     //choix utilisateur (joindre ou creer session)
-    
     @IBAction func ChoiceButton(_ sender: Any) {
         let ac = UIAlertController(title: "Connect to others", message: nil, preferredStyle: .actionSheet)
         
@@ -288,7 +304,7 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
     
     ////////////////////////////////////////////////////////////////////////////////////
     func startPhoto(action: UIAlertAction!) {
-     
+        
         if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum){
             print("Button capture")
             
@@ -307,10 +323,6 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         aChoice.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         
         present(aChoice, animated: true)
-        
-        
-   
-        
     }
     func imagePickerController(picker: UIImagePickerController!, didFinishPickingImage image: UIImage!, editingInfo: NSDictionary!){
         self.dismiss(animated: true, completion: { () -> Void in
@@ -320,18 +332,116 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         imgView.image = image
     }
     
+    @IBAction func sendVocal(_ sender: UIButton) {
+        if audioRecorder == nil {
+            self.sendVocalButton.setTitle("S", for: .normal)
+            self.startRecording()
+        } else {
+            self.sendVocalButton.setTitle("R", for: .normal)
+            self.finishRecording(success: true)
+        }
+    }
     
+    func startRecording() {
+        fileName =  "\(getDate())-recording"
+        fileExtension = "m4a"
+        
+        let audioFileName = getTempDirectory().appendingPathComponent("\(fileName).\(fileExtension)")
+        
+        fileURL = audioFileName.path
+        
+        let audioSession = AVAudioSession.sharedInstance()
+        do {
+            audioRecorder = try AVAudioRecorder(url: audioFileName, settings: [
+                AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+                AVSampleRateKey: 12000,
+                AVNumberOfChannelsKey: 1,
+                AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
+                ])
+            audioRecorder.delegate = self
+            audioRecorder.prepareToRecord()
+        } catch {
+            finishRecording(success: false)
+        }
+        
+        do {
+            try audioSession.setActive(true)
+            audioRecorder.record()
+        } catch {
+        }
+    }
     
+    func finishRecording(success: Bool) {
+        audioRecorder.stop()
+        audioRecorder = nil
+        
+        if success {
+            print("Success")
+            
+            print(mcSession.connectedPeers.count)
+            print(URL(fileURLWithPath: fileURL))
+            print(mcSession.connectedPeers)
+            
+            
+            if mcSession.connectedPeers.count > 0 {
+                do {
+                    try mcSession.send(Data(contentsOf: URL(fileURLWithPath: fileURL)), toPeers: mcSession.connectedPeers, with: .reliable)
+                    
+                    let newMember = Member(name: peerID.displayName, color: .blue)
+                    let newMessage = Message(member: newMember, text: fileURL.components(separatedBy: "/").last!, type: "audio")
+                    
+                    tabMember.append(newMessage)
+                    collectionView.reloadData()
+                    audioSend = true
+                } catch let error {
+                    print(error)
+                }
+                
+            }
+        } else {
+            print("An error occured")
+        }
+    }
     
+    func playAudio(URLTo: String) {
+        do {
+            print(URLTo)
+            audioPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: URLTo))
+            if audioPlayer != nil {
+                audioPlayer.prepareToPlay()
+                audioPlayer.play()
+            }
+        } catch {
+            print("Error")
+        }
+    }
     
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+        if !flag {
+            finishRecording(success: false)
+        }
+    }
     
+    func getDate() -> String{
+        let date = DateFormatter()
+        date.dateFormat = "yyyyMMddhhmmss"
+        let now = date.string(from: Date())
+        
+        return now
+    }
     
+    func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let documentsDirectory = paths[0]
+        return documentsDirectory
+    }
     
-    
-    
-    
-    
+    func getTempDirectory() -> URL {
+        return URL(fileURLWithPath: NSTemporaryDirectory())
+    }
 }
+
+
 
 
 
