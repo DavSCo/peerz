@@ -366,7 +366,7 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum){
             print("Button capture")
             
-            imagePicker.delegate = self as? UIImagePickerControllerDelegate & UINavigationControllerDelegate
+            imagePicker.delegate = self
             imagePicker.sourceType = .savedPhotosAlbum;
             imagePicker.allowsEditing = false
             

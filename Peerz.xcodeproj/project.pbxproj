@@ -81,12 +81,9 @@
 				7955409E21A2FC4C00E5EB01 /* ChatsViewController.swift */,
 				795540A021A2FC4C00E5EB01 /* SettingsViewController.swift */,
 				795540B221A4014C00E5EB01 /* PrivateViewController.swift */,
-
 				4E5393BD21ABFCCC001AA7E5 /* MessageBubbleCollectionViewCell.swift */,
 				4E2DC34321B542B2006B89A0 /* ImageCellController.swift */,
-
 				79847D0921AC244A00269490 /* FaceCallViewController.swift */,
-
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -322,9 +319,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-
-				DEVELOPMENT_TEAM = CZB4ZK4EUT;
-
+				DEVELOPMENT_TEAM = KL4T9L72P2;
 				INFOPLIST_FILE = Peerz/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -343,9 +338,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-
-				DEVELOPMENT_TEAM = CZB4ZK4EUT;
-
+				DEVELOPMENT_TEAM = KL4T9L72P2;
 				INFOPLIST_FILE = Peerz/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = (
