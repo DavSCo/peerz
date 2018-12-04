@@ -44,9 +44,6 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
     var fileExtension = ""
     var fileURL = ""
     
-    
-    var audioSend = false
-  
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
  
     
@@ -92,6 +89,8 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         do {
             try recordingSession.setCategory(.playAndRecord, mode: .default)
             try recordingSession.setActive(true)
+            try recordingSession.overrideOutputAudioPort(AVAudioSession.PortOverride.speaker)
+
             recordingSession.requestRecordPermission() { [unowned self] allowed in DispatchQueue.main.async {
                 if allowed {
                     print("Recording allowed")
@@ -286,12 +285,17 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
  
     //on recoit le message
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
+        
+        var isMessage = false
+        var isImage = false
+        
         if let message = String(data: data, encoding: .utf8) {
             let newMember = Member(name: peerID.displayName, color: .blue)
             let tempMessage = Message(member: newMember, text: message, image: nil, type: "text")
             DispatchQueue.main.async {
                 self.tabMember.append(tempMessage)
                 self.collectionView.reloadData()
+                isMessage = true
             }
         }
         
@@ -301,10 +305,11 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
             DispatchQueue.main.async { [unowned self] in
                 self.tabMember.append(tempMessage)
                 self.collectionView?.reloadData()
+                isImage = true
             }
         }
-        
-        if audioSend ==  true {
+    
+        if (isMessage == false && isImage == false) {
             DispatchQueue.main.async {
                 do {
                     let tempName = "\(self.getDate())-received.m4a"
@@ -317,13 +322,11 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
                     self.tabMember.append(temMessage)
                     self.collectionView.reloadData()
                     
-                    self.audioSend = false
-                    
                 } catch let error {
                     print(error)
                 }
             }
-       }
+        }
     }
     
     // pour creer une session
@@ -401,17 +404,14 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
                 (newStatus) in
                 print("status is \(newStatus)")
                 if newStatus ==  PHAuthorizationStatus.authorized {
-                    /* do stuff here */
                     self.present(self.imagePicker, animated: true, completion: nil)
                     print("success")
                 }
             })
             print("It is not determined until now")
         case .restricted:
-            // same same
             print("User do not have access to photo album.")
         case .denied:
-            // same same
             print("User has denied the permission.")
         }
     }
@@ -420,10 +420,10 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
 
     @IBAction func sendVocal(_ sender: UIButton) {
         if audioRecorder == nil {
-            self.sendVocalButton.setTitle("S", for: .normal)
+            self.sendVocalButton.setImage(UIImage(named: "Stop"), for: .normal)
             self.startRecording()
         } else {
-            self.sendVocalButton.setTitle("R", for: .normal)
+            self.sendVocalButton.setImage(UIImage(named: "Micro"), for: .normal)
             self.finishRecording(success: true)
         }
     }
@@ -465,11 +465,6 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         if success {
             print("Success")
             
-            print(mcSession.connectedPeers.count)
-            print(URL(fileURLWithPath: fileURL))
-            print(mcSession.connectedPeers)
-            
-            
             if mcSession.connectedPeers.count > 0 {
                 do {
                     try mcSession.send(Data(contentsOf: URL(fileURLWithPath: fileURL)), toPeers: mcSession.connectedPeers, with: .reliable)
@@ -480,21 +475,17 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
                     
                     tabMember.append(newMessage)
                     collectionView.reloadData()
-                    audioSend = true
                 } catch let error {
                     print(error)
                 }
-                
             }
         } else {
             print("An error occured")
         }
     }
     
-
     func playAudio(URLTo: String) {
         do {
-            print(URLTo)
             audioPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: URLTo))
             if audioPlayer != nil {
                 audioPlayer.prepareToPlay()
