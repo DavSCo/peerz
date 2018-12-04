@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="49e-Tb-3d3">
-    <device id="retina5_9" orientation="portrait">
+    <device id="retina6_1" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -15,11 +15,11 @@
             <objects>
                 <viewController id="9pv-A4-QxB" customClass="ChatsViewController" customModule="Peerz" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tsR-hK-woN">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="ukO-eN-Gwt">
-                                <rect key="frame" x="10" y="663" width="349" height="50"/>
+                                <rect key="frame" x="49" y="747" width="349" height="50"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="4mk-bm-5vQ">
                                         <rect key="frame" x="0.0" y="0.0" width="0.0" height="50"/>
@@ -72,7 +72,7 @@
                                 </constraints>
                             </stackView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="7IE-iY-xh5">
-                                <rect key="frame" x="16" y="163" width="343" height="451"/>
+                                <rect key="frame" x="16" y="163" width="382" height="535"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="GCe-9R-YTJ">
                                     <size key="itemSize" width="343" height="51"/>
@@ -81,14 +81,14 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="theirCell" id="GdS-oC-79T" customClass="MessageBubbleCollectionViewCell" customModule="Peerz" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="343" height="51"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" reuseIdentifier="theirCell" id="GdS-oC-79T" customClass="MessageBubbleCollectionViewCell" customModule="Peerz" customModuleProvider="target">
+                                        <rect key="frame" x="19.5" y="0.0" width="343" height="51"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="343" height="51"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VWf-x0-gVh">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VWf-x0-gVh">
                                                     <rect key="frame" x="0.0" y="0.0" width="343" height="51"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -102,14 +102,14 @@
                                             <outlet property="messageLabel" destination="VWf-x0-gVh" id="ZMH-pl-aCa"/>
                                         </connections>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="myCell" id="DWO-U8-Q5Y" customClass="MessageBubbleCollectionViewCell" customModule="Peerz" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="61" width="343" height="51"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" reuseIdentifier="myCell" id="DWO-U8-Q5Y" customClass="MessageBubbleCollectionViewCell" customModule="Peerz" customModuleProvider="target">
+                                        <rect key="frame" x="19.5" y="61" width="343" height="51"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="343" height="51"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s2B-nl-wxC">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s2B-nl-wxC">
                                                     <rect key="frame" x="0.0" y="0.0" width="343" height="51"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -123,7 +123,7 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="myPicture" id="ENq-xp-WRL" customClass="MessageBubbleCollectionViewCell" customModule="Peerz" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="122" width="343" height="51"/>
+                                        <rect key="frame" x="19.5" y="122" width="343" height="51"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="343" height="51"/>
@@ -141,7 +141,7 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="theirPicture" id="KXh-pB-FqI" customClass="MessageBubbleCollectionViewCell" customModule="Peerz" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="183" width="343" height="51"/>
+                                        <rect key="frame" x="19.5" y="183" width="343" height="51"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="343" height="51"/>
@@ -212,7 +212,7 @@
             <objects>
                 <viewController id="8rJ-Kc-sve" customClass="SettingsViewController" customModule="Peerz" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="QS5-Rx-YEW">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="O1u-W8-tvY"/>
@@ -228,7 +228,7 @@
             <objects>
                 <viewController id="YFi-LV-G0L" customClass="PrivateViewController" customModule="Peerz" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8qW-Vu-1lk">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="pzZ-RK-4xH"/>
@@ -256,19 +256,22 @@
             <objects>
                 <viewController id="B2N-5f-1MA" customClass="FaceCallViewController" customModule="Peerz" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="02O-km-MkZ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7gQ-2c-vzY">
-                                <rect key="frame" x="0.0" y="140" width="375" height="589"/>
+                                <rect key="frame" x="0.0" y="140" width="414" height="673"/>
                                 <color key="backgroundColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dDO-Vd-h3n">
-                                <rect key="frame" x="276" y="602" width="83" height="107"/>
+                                <rect key="frame" x="252" y="625" width="146" height="168"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="dDO-Vd-h3n" secondAttribute="height" multiplier="107:123" id="6Tn-DH-axi"/>
+                                </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="grk-QY-kpL">
-                                <rect key="frame" x="160" y="627" width="70" height="70"/>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="grk-QY-kpL">
+                                <rect key="frame" x="160" y="711" width="70" height="70"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="70" id="7hz-qn-jDM"/>
                                     <constraint firstAttribute="height" constant="70" id="ZAb-O1-sBx"/>
@@ -281,6 +284,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="dDO-Vd-h3n" firstAttribute="leading" secondItem="7W6-Ba-uCw" secondAttribute="leading" constant="252" id="8Oy-7P-LXq"/>
                             <constraint firstItem="7W6-Ba-uCw" firstAttribute="trailing" secondItem="7gQ-2c-vzY" secondAttribute="trailing" id="FIw-Su-Yyp"/>
                             <constraint firstItem="7gQ-2c-vzY" firstAttribute="leading" secondItem="7W6-Ba-uCw" secondAttribute="leading" id="JqQ-PS-MCV"/>
                             <constraint firstItem="7W6-Ba-uCw" firstAttribute="bottom" secondItem="dDO-Vd-h3n" secondAttribute="bottom" constant="20" id="RGQ-WA-BRj"/>
@@ -288,9 +292,6 @@
                             <constraint firstItem="7W6-Ba-uCw" firstAttribute="trailing" secondItem="dDO-Vd-h3n" secondAttribute="trailing" constant="16" id="bfn-RQ-8wX"/>
                             <constraint firstItem="7W6-Ba-uCw" firstAttribute="bottom" secondItem="grk-QY-kpL" secondAttribute="bottom" constant="32" id="cxe-N1-C52"/>
                             <constraint firstItem="7W6-Ba-uCw" firstAttribute="bottom" secondItem="7gQ-2c-vzY" secondAttribute="bottom" id="hkj-UQ-Nz0"/>
-                            <constraint firstItem="dDO-Vd-h3n" firstAttribute="leading" secondItem="grk-QY-kpL" secondAttribute="trailing" constant="46" id="iOF-7L-Df8"/>
-                            <constraint firstItem="dDO-Vd-h3n" firstAttribute="leading" secondItem="7W6-Ba-uCw" secondAttribute="leading" constant="276" id="l7D-KJ-8XN"/>
-                            <constraint firstItem="dDO-Vd-h3n" firstAttribute="top" secondItem="7W6-Ba-uCw" secondAttribute="top" constant="462" id="qZd-ZL-Ebv"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="7W6-Ba-uCw"/>
                     </view>
@@ -304,7 +305,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aTu-WG-EJC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3708.6956521739135" y="305.35714285714283"/>
+            <point key="canvasLocation" x="3708" y="304.4977511244378"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
@@ -333,7 +334,7 @@
                     <tabBarItem key="tabBarItem" title="Chats" image="Chats" id="acW-dT-cKf"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="WLT-9a-Bh9">
-                        <rect key="frame" x="0.0" y="44" width="375" height="96"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -352,7 +353,7 @@
                     <tabBarItem key="tabBarItem" title="Settings" image="Settings" id="cPa-gy-q4n"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="qGX-NC-0DP">
-                        <rect key="frame" x="0.0" y="44" width="375" height="96"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -371,7 +372,7 @@
                     <tabBarItem key="tabBarItem" title="Private" image="Private" id="ico-I1-QmL"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="YDl-TR-D1P">
-                        <rect key="frame" x="0.0" y="44" width="375" height="96"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -385,11 +386,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Chats" width="56.25" height="56.25"/>
+        <image name="Chats" width="37.5" height="37.5"/>
         <image name="FaceCallEnd" width="1024" height="1024"/>
-        <image name="Private" width="56.25" height="56.25"/>
-        <image name="Settings" width="56.25" height="56.25"/>
-        <image name="phone" width="56.25" height="56.25"/>
-        <image name="videocall" width="56.25" height="56.25"/>
+        <image name="Private" width="37.5" height="37.5"/>
+        <image name="Settings" width="37.5" height="37.5"/>
+        <image name="phone" width="37.5" height="37.5"/>
+        <image name="videocall" width="37.5" height="37.5"/>
     </resources>
 </document>
