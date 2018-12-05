@@ -405,13 +405,18 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         mcBrowser.delegate = self
         present(mcBrowser, animated: true)
     }
+    func disconnectSession(action: UIAlertAction!) {
+        mcSession.disconnect()
+    }
     
     //choix utilisateur (joindre ou creer session)
     @IBAction func ChoiceButton(_ sender: Any) {
         let ac = UIAlertController(title: "Connect to others", message: nil, preferredStyle: .actionSheet)
-        
-        ac.addAction(UIAlertAction(title: "Host a session", style: .default, handler: startHosting))
-        
+        if mcSession.connectedPeers.count > 0 {
+            ac.addAction(UIAlertAction(title: "Disconnect a session", style: .default, handler: disconnectSession))
+        } else {
+            ac.addAction(UIAlertAction(title: "Host a session", style: .default, handler: startHosting))
+        }
         ac.addAction(UIAlertAction(title: "Join a session", style: .default, handler: joinSession))
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         present(ac, animated: true)
