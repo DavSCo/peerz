@@ -71,7 +71,6 @@ class FaceCallViewController: UIViewController, MCSessionDelegate, MCBrowserView
         mcSession = MCSession(peer: peerID, securityIdentity: nil, encryptionPreference: .required)
         mcSession.delegate = self
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(startBarButton))
         
         setupCameraSession()
     }
@@ -187,7 +186,7 @@ class FaceCallViewController: UIViewController, MCSessionDelegate, MCBrowserView
         }
     }
     
-    @objc func startBarButton() {
+    @IBAction func startBarButtonAction(_ sender: Any) {
         let ac = UIAlertController(title: "Connect to others", message: nil, preferredStyle: .actionSheet)
         if mcSession.connectedPeers.count > 0 {
             ac.addAction(UIAlertAction(title: "Disconnect a session", style: .default, handler: disconnectSession))
@@ -217,7 +216,7 @@ class FaceCallViewController: UIViewController, MCSessionDelegate, MCBrowserView
     @IBAction func endCallButtonAction(_ sender: Any) {
         mcSession.disconnect()
         captureSession.stopRunning()
-        navigationController?.popViewController(animated: true)
+//        navigationController?.popViewController(animated: true)
     }
     
     //Session
