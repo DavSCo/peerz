@@ -25,7 +25,7 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
     //variable Avertisseur
     var mcAdvertiserAssistant: MCAdvertiserAssistant!
     //choisir photo
-    let imagePicker = UIImagePickerController()
+    var imagePicker = UIImagePickerController()
     
     //Core Data
     var appDelegate = AppDelegate()
@@ -350,6 +350,7 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
                     present(ac, animated: true)
                 }
             }
+            
         }
         
     }
@@ -429,24 +430,22 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         picker.delegate = self
         present(picker, animated: true)
     }
-    
-    
-    func startPhoto(action: UIAlertAction!) {
-        
-        if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum){
-            print("Button capture")
-            
-            imagePicker.delegate = self
-            imagePicker.sourceType = .savedPhotosAlbum;
-            imagePicker.allowsEditing = false
-            
-            self.present(imagePicker, animated: true, completion: nil)
-        }
+    func takePicture(action: UIAlertAction!)
+    {
+        let vc = UIImagePickerController()
+        vc.sourceType = .camera
+        vc.allowsEditing = true
+        vc.delegate = self
+        present(vc, animated: true)
     }
+    
+  
     @IBAction func ChoiceSend(_ sender: Any) {
         
         let aChoice = UIAlertController(title: "Choice Send", message: nil, preferredStyle: .actionSheet)
         aChoice.addAction(UIAlertAction(title: "Envoyer Une photo", style: .default, handler: importPicture))
+        aChoice.addAction(UIAlertAction(title: "Prendre une photo", style: .default, handler: takePicture))
+
         aChoice.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         
         present(aChoice, animated: true)
@@ -459,6 +458,7 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         dismiss(animated: true)
         
         sendPicture(img: image)
+        
         collectionView?.reloadData()
     }
     
