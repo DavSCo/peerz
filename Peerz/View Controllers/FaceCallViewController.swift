@@ -10,6 +10,7 @@ import UIKit
 import MultipeerConnectivity
 import AVFoundation
 import VideoToolbox
+import CoreData
 
 class FaceCallViewController: UIViewController, MCSessionDelegate, MCBrowserViewControllerDelegate, AVCaptureVideoDataOutputSampleBufferDelegate, AVAudioRecorderDelegate, AVCaptureAudioDataOutputSampleBufferDelegate {
     
@@ -38,10 +39,35 @@ class FaceCallViewController: UIViewController, MCSessionDelegate, MCBrowserView
     var mcAdvertiserAssistant: MCAdvertiserAssistant!
     var stream: OutputStream!
     
+    //Core Data
+    var appDelegate = AppDelegate()
+    var context = NSManagedObjectContext()
+    var deviceId = ""
+    //
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        peerID = MCPeerID(displayName: UIDevice.current.name)
+        self.appDelegate = UIApplication.shared.delegate as! AppDelegate
+        self.context = appDelegate.persistentContainer.viewContext
+        
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "DeviceID")
+        request.returnsObjectsAsFaults = false
+        do {
+            let result = try context.fetch(request)
+            for data in result as! [NSManagedObject] {
+                print(data.value(forKey: "name") as! String)
+                deviceId = data.value(forKey: "name") as! String
+            }
+        } catch {
+            print("Failed")
+        }
+        
+        if deviceId == "" {
+            peerID = MCPeerID(displayName: UIDevice.current.name)
+        } else {
+            peerID = MCPeerID(displayName: deviceId)
+        }
         mcSession = MCSession(peer: peerID, securityIdentity: nil, encryptionPreference: .required)
         mcSession.delegate = self
         

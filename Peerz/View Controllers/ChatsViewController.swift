@@ -11,6 +11,7 @@ import UIKit
 import Photos
 import MultipeerConnectivity
 import AVFoundation
+import CoreData
 
 class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate,UITextFieldDelegate,UIImagePickerControllerDelegate , UINavigationControllerDelegate, AVAudioRecorderDelegate {
     /////////////////////////////////////////////////////////////////////////VARIABLE ///////////////////////////////////////////////////////////////
@@ -26,6 +27,13 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
     //choisir photo
     let imagePicker = UIImagePickerController()
     
+    //Core Data
+    var appDelegate = AppDelegate()
+    var context = NSManagedObjectContext()
+    var deviceId = ""
+    var darkMode = false
+    var darkColor = CIColor(red: 41, green: 42, blue: 48)
+    //
     
     //variable du tap recognizer
     @IBOutlet var tapGestureView: UITapGestureRecognizer!
@@ -78,9 +86,46 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         collectionView.dataSource = self
         collectionView.delegate = self
         
+        self.appDelegate = UIApplication.shared.delegate as! AppDelegate
+        self.context = appDelegate.persistentContainer.viewContext
         
+        let requestDarkMode = NSFetchRequest<NSFetchRequestResult>(entityName: "DarkMode")
+        requestDarkMode.returnsObjectsAsFaults = false
+        do {
+            let resultDarkMode = try context.fetch(requestDarkMode)
+            for dataDark in resultDarkMode as! [NSManagedObject] {
+                print(dataDark.value(forKey: "isActive") as! Bool)
+                darkMode = dataDark.value(forKey: "isActive") as! Bool
+            }
+        } catch {
+            print("Failed")
+        }
         
-        peerID = MCPeerID(displayName: UIDevice.current.name)
+        if darkMode {
+            navigationController?.navigationBar.backgroundColor = .black
+            view.backgroundColor = .black
+        } else {
+            navigationController?.navigationBar.backgroundColor = .white
+            view.backgroundColor = .white
+        }
+        
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "DeviceID")
+        request.returnsObjectsAsFaults = false
+        do {
+            let result = try context.fetch(request)
+            for data in result as! [NSManagedObject] {
+                print(data.value(forKey: "name") as! String)
+                deviceId = data.value(forKey: "name") as! String
+            }
+        } catch {
+            print("Failed")
+        }
+        
+        if deviceId == "" {
+            peerID = MCPeerID(displayName: UIDevice.current.name)
+        } else {
+             peerID = MCPeerID(displayName: deviceId)
+        }
         mcSession = MCSession(peer: peerID, securityIdentity: nil, encryptionPreference: .required)
         mcSession.delegate = self
         
@@ -101,6 +146,32 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
             }
         } catch {
             print("Failed to record!")
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.appDelegate = UIApplication.shared.delegate as! AppDelegate
+        self.context = appDelegate.persistentContainer.viewContext
+        
+        let requestDarkMode = NSFetchRequest<NSFetchRequestResult>(entityName: "DarkMode")
+        requestDarkMode.returnsObjectsAsFaults = false
+        do {
+            let resultDarkMode = try context.fetch(requestDarkMode)
+            for dataDark in resultDarkMode as! [NSManagedObject] {
+                print(dataDark.value(forKey: "isActive") as! Bool)
+                darkMode = dataDark.value(forKey: "isActive") as! Bool
+            }
+        } catch {
+            print("Failed")
+        }
+        
+        if darkMode {
+            navigationController?.navigationBar.backgroundColor = .black
+            view.backgroundColor = .black
+        } else {
+            navigationController?.navigationBar.backgroundColor = .white
+            view.backgroundColor = .white
         }
     }
     //cacher le clavier
