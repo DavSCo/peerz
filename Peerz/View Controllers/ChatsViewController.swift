@@ -13,7 +13,7 @@ import MultipeerConnectivity
 import AVFoundation
 
 class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate,UITextFieldDelegate,UIImagePickerControllerDelegate , UINavigationControllerDelegate, AVAudioRecorderDelegate {
-/////////////////////////////////////////////////////////////////////////VARIABLE ///////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////VARIABLE ///////////////////////////////////////////////////////////////
     @IBOutlet weak var sendVocalButton: UIButton!
     
     @IBOutlet weak var collectionView: UICollectionView!
@@ -33,7 +33,7 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
     @IBOutlet weak var messageTextField: UITextField!
     //tabkeau de message
     var tabMember:  [Message] = []
-      // vocal notes
+    // vocal notes
     var recordingSession: AVAudioSession!
     var audioRecorder: AVAudioRecorder!
     var audioPlayer: AVAudioPlayer!
@@ -44,16 +44,16 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
     var fileExtension = ""
     var fileURL = ""
     
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
-///////////////////////////////////////////////////////STRUCTURES//////////////////////////////////////////////////////////////////////////////////
-
+    
+    ///////////////////////////////////////////////////////STRUCTURES//////////////////////////////////////////////////////////////////////////////////
+    
     struct Member {
         let name: String
         let color: UIColor
     }
-  
+    
     
     struct Message {
         let member: Member
@@ -62,23 +62,23 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         let type : String
         
     }
-////////////////////////////////////////////////////////////FUNCTION///////////////////////////////////////////////////////////////////////////////
-   
+    ////////////////////////////////////////////////////////////FUNCTION///////////////////////////////////////////////////////////////////////////////
     
-
-
-
+    
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
+        
         imagePicker.popoverPresentationController?.delegate = self as? UIPopoverPresentationControllerDelegate
         
         
         collectionView.dataSource = self
         collectionView.delegate = self
         
-
+        
         
         peerID = MCPeerID(displayName: UIDevice.current.name)
         mcSession = MCSession(peer: peerID, securityIdentity: nil, encryptionPreference: .required)
@@ -90,7 +90,7 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
             try recordingSession.setCategory(.playAndRecord, mode: .default)
             try recordingSession.setActive(true)
             try recordingSession.overrideOutputAudioPort(AVAudioSession.PortOverride.speaker)
-
+            
             recordingSession.requestRecordPermission() { [unowned self] allowed in DispatchQueue.main.async {
                 if allowed {
                     print("Recording allowed")
@@ -150,22 +150,22 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         if tabMember[indexPath.item].member.name == mcSession.myPeerID.displayName   {
             if tabMember[indexPath.item].type == "text" || tabMember[indexPath.item].type == "audio"  {
                 identifier = "myCell"
-
+                
             }else if tabMember[indexPath.item].type == "picture"{
                 identifier = "myPicture"
             }
             
         } else  {
             
-           if tabMember[indexPath.item].type == "text" || tabMember[indexPath.item].type == "audio"{
+            if tabMember[indexPath.item].type == "text" || tabMember[indexPath.item].type == "audio"{
                 identifier = "theirCell"
                 
             }else if tabMember[indexPath.item].type == "picture"{
                 identifier = "theirPicture"
             }
-
+            
         }
-     
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! MessageBubbleCollectionViewCell
         
         if tabMember[indexPath.item].type == "text"{
@@ -191,7 +191,7 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
             playAudio(URLTo: tempURL.replacingOccurrences(of: "file://", with: ""))
         }
     }
-
+    
     
     //function qui utilise la fonction d'envoi de message
     @IBAction func ButtonSendMessage(_ sender: Any) {
@@ -232,11 +232,11 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         }
     }
     
-
+    
     
     
     ///////////////////////////////////FONCTION D'ENVOI////////////////////////////////////////
-
+    
     func sendMessage(text: String)
     {
         if mcSession.connectedPeers.count > 0 {
@@ -245,7 +245,7 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
                     
                     let newMember = Member(name: peerID.displayName, color: .blue)
                     let newMessage=Message(member: newMember, text: text, image: nil, type: "text")
-
+                    
                     if messageTextField.text != ""
                     {
                         tabMember.append(newMessage)
@@ -282,20 +282,15 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         }
         
     }
- 
+    
     //on recoit le message
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
-        
-        var isMessage = false
-        var isImage = false
-        
         if let message = String(data: data, encoding: .utf8) {
             let newMember = Member(name: peerID.displayName, color: .blue)
             let tempMessage = Message(member: newMember, text: message, image: nil, type: "text")
             DispatchQueue.main.async {
                 self.tabMember.append(tempMessage)
                 self.collectionView.reloadData()
-                isMessage = true
             }
         }
         
@@ -305,11 +300,10 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
             DispatchQueue.main.async { [unowned self] in
                 self.tabMember.append(tempMessage)
                 self.collectionView?.reloadData()
-                isImage = true
             }
         }
-    
-        if (isMessage == false && isImage == false) {
+        
+        if String(data: data, encoding: .utf8) == nil && UIImage(data: data) == nil && data.count > 0 {
             DispatchQueue.main.async {
                 do {
                     let tempName = "\(self.getDate())-received.m4a"
@@ -359,8 +353,8 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         picker.delegate = self
         present(picker, animated: true)
     }
-
-  
+    
+    
     func startPhoto(action: UIAlertAction!) {
         
         if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum){
@@ -380,9 +374,9 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         aChoice.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         
         present(aChoice, animated: true)
-
+        
     }
- 
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[.editedImage] as? UIImage else { return }
         
@@ -392,11 +386,11 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         collectionView?.reloadData()
     }
     
-
+    
     func checkPermission() {
         let photoAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
         switch photoAuthorizationStatus {
-        case .authorized: 
+        case .authorized:
             
             present(imagePicker, animated: true, completion: nil)
         case .notDetermined:
@@ -415,9 +409,9 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
             print("User has denied the permission.")
         }
     }
-  
-        
-
+    
+    
+    
     @IBAction func sendVocal(_ sender: UIButton) {
         if audioRecorder == nil {
             self.sendVocalButton.setImage(UIImage(named: "Stop"), for: .normal)
@@ -428,7 +422,6 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         }
     }
 
-    
     func startRecording() {
         fileName =  "\(getDate())-recording"
         fileExtension = "m4a"
@@ -519,7 +512,7 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
     func getTempDirectory() -> URL {
         return URL(fileURLWithPath: NSTemporaryDirectory())
     }
-
+    
 }
 
 
