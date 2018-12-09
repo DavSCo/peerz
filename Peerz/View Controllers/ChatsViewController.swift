@@ -14,54 +14,34 @@ import AVFoundation
 import CoreData
 
 class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate,UITextFieldDelegate,UIImagePickerControllerDelegate , UINavigationControllerDelegate, AVAudioRecorderDelegate {
-    /////////////////////////////////////////////////////////////////////////VARIABLE ///////////////////////////////////////////////////////////////
+    
     @IBOutlet weak var sendVocalButton: UIButton!
-    
     @IBOutlet weak var collectionView: UICollectionView!
-    //Variable peerID
+    @IBOutlet var tapGestureView: UITapGestureRecognizer!
+    @IBOutlet weak var messageTextField: UITextField!
+
+   
     var peerID: MCPeerID!
-    //variable mcSession
     var mcSession: MCSession!
-    //variable Avertisseur
     var mcAdvertiserAssistant: MCAdvertiserAssistant!
-    //choisir photo
     var imagePicker = UIImagePickerController()
-    
-    //Core Data
     var appDelegate = AppDelegate()
     var context = NSManagedObjectContext()
     var deviceId = ""
     var darkMode = false
     var darkColor = CIColor(red: 41, green: 42, blue: 48)
-    //
-    
-    //variable du tap recognizer
-    @IBOutlet var tapGestureView: UITapGestureRecognizer!
-    //text field
-    @IBOutlet weak var messageTextField: UITextField!
-    //tabkeau de message
     var tabMember:  [Message] = []
-    // vocal notes
     var recordingSession: AVAudioSession!
     var audioRecorder: AVAudioRecorder!
     var audioPlayer: AVAudioPlayer!
-    
-    
-    // file
     var fileName = ""
     var fileExtension = ""
     var fileURL = ""
-    
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    
-    
-    ///////////////////////////////////////////////////////STRUCTURES//////////////////////////////////////////////////////////////////////////////////
     
     struct Member {
         let name: String
         let color: UIColor
     }
-    
     
     struct Message {
         let member: Member
@@ -70,19 +50,12 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         let type : String
         
     }
-    ////////////////////////////////////////////////////////////FUNCTION///////////////////////////////////////////////////////////////////////////////
-    
-    
-    
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         imagePicker.popoverPresentationController?.delegate = self as? UIPopoverPresentationControllerDelegate
-        
-        
+    
         collectionView.dataSource = self
         collectionView.delegate = self
         
@@ -174,24 +147,23 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
             view.backgroundColor = .white
         }
     }
-    //cacher le clavier
+    
+    
+    /**
+     Calls sendMessage() when tapped
+     */
     @IBAction func hideKeyboardAction(_ sender: Any) {
-        
         messageTextField.endEditing(true)
-        
     }
     
-    //bouger le clavier
     func textFieldDidBeginEditing(_ textField: UITextField) {
         moveTextField(textField, moveDistance: -200, up: true)
     }
     
-    //fini d'ecrire
     func textFieldDidEndEditing(_ textField: UITextField) {
         moveTextField(textField, moveDistance: -200, up: false)
     }
     
-    // on bouge le text fild
     func moveTextField(_ textField: UITextField, moveDistance: Int, up: Bool) {
         
         let moveDuration = 0.3
@@ -205,14 +177,10 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         UIView.commitAnimations()
     }
     
-    //function return nombre de item dans collenction view
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
         return tabMember.count
     }
     
-    
-    //ule du collection view
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         var identifier: String = ""
@@ -252,6 +220,10 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         return cell
     }
     
+    
+    /**
+     Plays audio when a cell with URL is tapped
+     */
     @objc func tapCell(_ sender: UITapGestureRecognizer) {
         
         let location = sender.location(in: self.collectionView)
@@ -265,8 +237,9 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         }
     }
     
-    
-    //function qui utilise la fonction d'envoi de message
+    /**
+     Calls sendMessage() when tapped
+     */
     @IBAction func ButtonSendMessage(_ sender: Any) {
         sendMessage(text: messageTextField.text!)
     }
@@ -306,10 +279,9 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
     }
     
     
-    
-    
-    ///////////////////////////////////FONCTION D'ENVOI////////////////////////////////////////
-    
+    /**
+     Sends text messages
+     */
     func sendMessage(text: String)
     {
         if mcSession.connectedPeers.count > 0 {
@@ -337,10 +309,13 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         }
     }
     
+    
+    /**
+     Sends picture messages
+     */
     func sendPicture(img:UIImage) {
         if mcSession.connectedPeers.count > 0 {
             if let imageData = img.pngData() {
-                // 3
                 do {
                     let newMember = Member(name: peerID.displayName, color: .blue)
                     let newMessage=Message(member: newMember, text: nil, image:img , type: "picture")
@@ -357,7 +332,6 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         
     }
     
-    //on recoit le message
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
         if let message = String(data: data, encoding: .utf8) {
             let newMember = Member(name: peerID.displayName, color: .blue)
@@ -397,22 +371,34 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         }
     }
     
-    // pour creer une session
+    /**
+     Starts hosting
+     */
     func startHosting(action: UIAlertAction!) {
         mcAdvertiserAssistant = MCAdvertiserAssistant(serviceType: "hws-kb", discoveryInfo: nil, session: mcSession)
         mcAdvertiserAssistant.start()
     }
-    //pour joindre une session
+    
+    /**
+     Connect user to session
+     */
+    
     func joinSession(action: UIAlertAction!) {
         let mcBrowser = MCBrowserViewController(serviceType: "hws-kb", session: mcSession)
         mcBrowser.delegate = self
         present(mcBrowser, animated: true)
     }
+    
+    /**
+     Disconnects user from current session
+     */
     func disconnectSession(action: UIAlertAction!) {
         mcSession.disconnect()
     }
     
-    //choix utilisateur (joindre ou creer session)
+    /**
+     Creates alert for connection choices
+     */
     @IBAction func ChoiceButton(_ sender: Any) {
         let ac = UIAlertController(title: "Connect to others", message: nil, preferredStyle: .actionSheet)
         if mcSession.connectedPeers.count > 0 {
@@ -425,13 +411,19 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         present(ac, animated: true)
     }
     
-    
+    /**
+     Creates alert to choose a picture
+     */
     func importPicture(action: UIAlertAction!) {
         let picker = UIImagePickerController()
         picker.allowsEditing = true
         picker.delegate = self
         present(picker, animated: true)
     }
+    
+    /**
+     Creates alert to take picture
+     */
     func takePicture(action: UIAlertAction!)
     {
         let vc = UIImagePickerController()
@@ -441,12 +433,14 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         present(vc, animated: true)
     }
     
-  
+    /**
+     Creates user's choices  for photos
+     */
     @IBAction func ChoiceSend(_ sender: Any) {
         
         let aChoice = UIAlertController(title: "Choice Send", message: nil, preferredStyle: .actionSheet)
-        aChoice.addAction(UIAlertAction(title: "Envoyer Une photo", style: .default, handler: importPicture))
-        aChoice.addAction(UIAlertAction(title: "Prendre une photo", style: .default, handler: takePicture))
+        aChoice.addAction(UIAlertAction(title: "Send a picture", style: .default, handler: importPicture))
+        aChoice.addAction(UIAlertAction(title: "Choose a picture", style: .default, handler: takePicture))
 
         aChoice.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         
@@ -464,7 +458,9 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         collectionView?.reloadData()
     }
     
-    
+    /**
+     Checks user's permission
+     */
     func checkPermission() {
         let photoAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
         switch photoAuthorizationStatus {
@@ -488,8 +484,9 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         }
     }
     
-    
-    
+    /**
+     Starts or finihes audio recoding and send  its file
+     */
     @IBAction func sendVocal(_ sender: UIButton) {
         if audioRecorder == nil {
             self.sendVocalButton.setImage(UIImage(named: "Stop"), for: .normal)
@@ -499,7 +496,10 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
             self.finishRecording(success: true)
         }
     }
-
+    
+    /**
+     Starts audio recording and creates its file
+     */
     func startRecording() {
         fileName =  "\(getDate())-recording"
         fileExtension = "m4a"
@@ -529,6 +529,12 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         }
     }
     
+    /**
+     Called when recordin is finished
+     
+     - Parameter success: a boolean to know if recoding
+     succeded or failed
+     */
     func finishRecording(success: Bool) {
         audioRecorder.stop()
         audioRecorder = nil
@@ -555,6 +561,12 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         }
     }
     
+    /**
+     Plays audio from given URL path
+     
+     - Parameter URLTo: path of audio to play
+     */
+
     func playAudio(URLTo: String) {
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: URLTo))
@@ -573,6 +585,9 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         }
     }
     
+    /**
+     Returns a customized date format as String
+     */
     func getDate() -> String{
         let date = DateFormatter()
         date.dateFormat = "yyyyMMddhhmmss"
@@ -581,12 +596,18 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         return now
     }
     
+    /**
+     Returns the URL of documents directory
+     */
     func getDocumentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         let documentsDirectory = paths[0]
         return documentsDirectory
     }
     
+    /**
+     Returns the URL of temporary directory
+     */
     func getTempDirectory() -> URL {
         return URL(fileURLWithPath: NSTemporaryDirectory())
     }

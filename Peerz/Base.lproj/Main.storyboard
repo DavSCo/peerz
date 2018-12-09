@@ -76,7 +76,7 @@
                                 </constraints>
                             </stackView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="7IE-iY-xh5">
-                                <rect key="frame" x="16" y="163" width="382" height="529"/>
+                                <rect key="frame" x="16" y="163" width="382" height="562"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="GCe-9R-YTJ">
                                     <size key="itemSize" width="343" height="51"/>
@@ -229,7 +229,7 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="ukO-eN-Gwt" firstAttribute="top" secondItem="7IE-iY-xh5" secondAttribute="bottom" constant="49" id="EnB-oR-1a5"/>
+                            <constraint firstItem="ukO-eN-Gwt" firstAttribute="top" secondItem="7IE-iY-xh5" secondAttribute="bottom" constant="16" id="EnB-oR-1a5"/>
                             <constraint firstItem="ukO-eN-Gwt" firstAttribute="leading" secondItem="PQr-Ze-W5v" secondAttribute="leading" constant="16" id="NCo-OA-F3B"/>
                             <constraint firstItem="7IE-iY-xh5" firstAttribute="top" secondItem="PQr-Ze-W5v" secondAttribute="top" constant="23" id="Xco-lQ-PCX"/>
                             <constraint firstItem="PQr-Ze-W5v" firstAttribute="trailing" secondItem="ukO-eN-Gwt" secondAttribute="trailing" constant="16" id="gJg-kA-HEQ"/>
