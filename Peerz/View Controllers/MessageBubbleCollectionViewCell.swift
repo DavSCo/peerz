@@ -12,5 +12,6 @@ class MessageBubbleCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var bubbleImageView: UIImageView!
     @IBOutlet weak var messageLabel: UILabel!
+    @IBOutlet weak var deviceIdLabel: UILabel!
     
 }

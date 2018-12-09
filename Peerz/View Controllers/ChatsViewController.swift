@@ -208,10 +208,12 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! MessageBubbleCollectionViewCell
         
         if tabMember[indexPath.item].type == "text"{
+            cell.deviceIdLabel.text = tabMember[indexPath.item].member.name
             cell.messageLabel.text = tabMember[indexPath.item].text
         }else if tabMember[indexPath.item].type == "picture"{
             cell.bubbleImageView.image = tabMember[indexPath.item].image
         }else if tabMember[indexPath.item].type == "audio"{
+            cell.deviceIdLabel.text = tabMember[indexPath.item].member.name
             cell.messageLabel.text = "▶️"
             cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapCell(_:))))
         }
