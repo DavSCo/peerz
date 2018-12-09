@@ -245,6 +245,7 @@ class ChatsViewController: UIViewController ,MCSessionDelegate, MCBrowserViewCon
         }else if tabMember[indexPath.item].type == "picture"{
             cell.bubbleImageView.image = tabMember[indexPath.item].image
         }else if tabMember[indexPath.item].type == "audio"{
+            cell.deviceIdLabel.text = tabMember[indexPath.item].member.name
             cell.messageLabel.text = "▶️"
             cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapCell(_:))))
         }
