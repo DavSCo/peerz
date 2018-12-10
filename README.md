@@ -4,7 +4,7 @@
 
 > Projet Swift permettant la communication entre devices à proximité en utilisant le framework Multipeer Connectivity
 
-![peerz-platfrom](imgs/peerz-platfrom.png)
+![peerz-platfrom](imgs/peerz-platform.png)
 
 ## Fonctionnalités
 
