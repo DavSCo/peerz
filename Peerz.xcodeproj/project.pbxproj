@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E2DC34421B542B2006B89A0 /* ImageCellController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E2DC34321B542B2006B89A0 /* ImageCellController.swift */; };
+		4E5393BE21ABFCCC001AA7E5 /* MessageBubbleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5393BD21ABFCCC001AA7E5 /* MessageBubbleCollectionViewCell.swift */; };
+		7908E6F021B6E97100A50A3A /* ThemesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7908E6EF21B6E97100A50A3A /* ThemesTableViewController.swift */; };
+		791FAB7B21B683A2003B94F8 /* DeviceIdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791FAB7A21B683A2003B94F8 /* DeviceIdViewController.swift */; };
+		791FAB7D21B688FB003B94F8 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791FAB7C21B688FB003B94F8 /* SettingsTableViewCell.swift */; };
+		791FAB8021B68B53003B94F8 /* PeerzCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 791FAB7E21B68B53003B94F8 /* PeerzCoreData.xcdatamodeld */; };
 		7955409D21A2FC4C00E5EB01 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7955409C21A2FC4C00E5EB01 /* AppDelegate.swift */; };
 		7955409F21A2FC4C00E5EB01 /* ChatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7955409E21A2FC4C00E5EB01 /* ChatsViewController.swift */; };
 		795540A121A2FC4C00E5EB01 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795540A021A2FC4C00E5EB01 /* SettingsViewController.swift */; };
@@ -14,9 +20,16 @@
 		795540A621A2FC4E00E5EB01 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 795540A521A2FC4E00E5EB01 /* Assets.xcassets */; };
 		795540A921A2FC4E00E5EB01 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 795540A721A2FC4E00E5EB01 /* LaunchScreen.storyboard */; };
 		795540B321A4014C00E5EB01 /* PrivateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795540B221A4014C00E5EB01 /* PrivateViewController.swift */; };
+		79847D0A21AC244A00269490 /* FaceCallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79847D0921AC244A00269490 /* FaceCallViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4E2DC34321B542B2006B89A0 /* ImageCellController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCellController.swift; sourceTree = "<group>"; };
+		4E5393BD21ABFCCC001AA7E5 /* MessageBubbleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBubbleCollectionViewCell.swift; sourceTree = "<group>"; };
+		7908E6EF21B6E97100A50A3A /* ThemesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesTableViewController.swift; sourceTree = "<group>"; };
+		791FAB7A21B683A2003B94F8 /* DeviceIdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceIdViewController.swift; sourceTree = "<group>"; };
+		791FAB7C21B688FB003B94F8 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
+		791FAB7F21B68B53003B94F8 /* PeerzCoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PeerzCoreData.xcdatamodel; sourceTree = "<group>"; };
 		7955409921A2FC4C00E5EB01 /* Peerz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Peerz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7955409C21A2FC4C00E5EB01 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7955409E21A2FC4C00E5EB01 /* ChatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsViewController.swift; sourceTree = "<group>"; };
@@ -26,6 +39,7 @@
 		795540A821A2FC4E00E5EB01 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		795540AA21A2FC4E00E5EB01 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		795540B221A4014C00E5EB01 /* PrivateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateViewController.swift; sourceTree = "<group>"; };
+		79847D0921AC244A00269490 /* FaceCallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceCallViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +79,7 @@
 				795540A521A2FC4E00E5EB01 /* Assets.xcassets */,
 				795540A721A2FC4E00E5EB01 /* LaunchScreen.storyboard */,
 				795540AA21A2FC4E00E5EB01 /* Info.plist */,
+				791FAB7E21B68B53003B94F8 /* PeerzCoreData.xcdatamodeld */,
 			);
 			path = Peerz;
 			sourceTree = "<group>";
@@ -75,6 +90,12 @@
 				7955409E21A2FC4C00E5EB01 /* ChatsViewController.swift */,
 				795540A021A2FC4C00E5EB01 /* SettingsViewController.swift */,
 				795540B221A4014C00E5EB01 /* PrivateViewController.swift */,
+				4E5393BD21ABFCCC001AA7E5 /* MessageBubbleCollectionViewCell.swift */,
+				4E2DC34321B542B2006B89A0 /* ImageCellController.swift */,
+				79847D0921AC244A00269490 /* FaceCallViewController.swift */,
+				791FAB7A21B683A2003B94F8 /* DeviceIdViewController.swift */,
+				791FAB7C21B688FB003B94F8 /* SettingsTableViewCell.swift */,
+				7908E6EF21B6E97100A50A3A /* ThemesTableViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -158,9 +179,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				795540B321A4014C00E5EB01 /* PrivateViewController.swift in Sources */,
+				7908E6F021B6E97100A50A3A /* ThemesTableViewController.swift in Sources */,
+				791FAB8021B68B53003B94F8 /* PeerzCoreData.xcdatamodeld in Sources */,
 				795540A121A2FC4C00E5EB01 /* SettingsViewController.swift in Sources */,
+				791FAB7D21B688FB003B94F8 /* SettingsTableViewCell.swift in Sources */,
 				7955409D21A2FC4C00E5EB01 /* AppDelegate.swift in Sources */,
+				791FAB7B21B683A2003B94F8 /* DeviceIdViewController.swift in Sources */,
+				79847D0A21AC244A00269490 /* FaceCallViewController.swift in Sources */,
 				7955409F21A2FC4C00E5EB01 /* ChatsViewController.swift in Sources */,
+				4E5393BE21ABFCCC001AA7E5 /* MessageBubbleCollectionViewCell.swift in Sources */,
+				4E2DC34421B542B2006B89A0 /* ImageCellController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,12 +335,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = KL4T9L72P2;
 				INFOPLIST_FILE = Peerz/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = peerz.Peerz;
+				PRODUCT_BUNDLE_IDENTIFIER = com.peerzSam.Peerz;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -324,12 +354,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = KL4T9L72P2;
 				INFOPLIST_FILE = Peerz/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = peerz.Peerz;
+				PRODUCT_BUNDLE_IDENTIFIER = com.peerzSam.Peerz;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -358,6 +390,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		791FAB7E21B68B53003B94F8 /* PeerzCoreData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				791FAB7F21B68B53003B94F8 /* PeerzCoreData.xcdatamodel */,
+			);
+			currentVersion = 791FAB7F21B68B53003B94F8 /* PeerzCoreData.xcdatamodel */;
+			path = PeerzCoreData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 7955409121A2FC4C00E5EB01 /* Project object */;
 }
