@@ -1,6 +1,7 @@
 ![logo](imgs/peerz-logo.png)
 
-# Peerz app ![platfrom](https://img.shields.io/badge/platfrom-iOS-%23949494.svg)  ![website](https://img.shields.io/badge/website-peerz.app-%23ff3f34.svg)
+# Peerz app ![platfrom](https://img.shields.io/badge/platfrom-iOS-%23949494.svg) [![website](https://img.shields.io/badge/website-peerz.app-%23ff3f34.svg)](https://peerz-app.netlify.com/)
+
 
 > Projet Swift permettant la communication entre devices à proximité en utilisant le framework Multipeer Connectivity
 
